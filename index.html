@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Clicker</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Click Counter</h1>
+        <div>
+            <input type="text" id="username" placeholder="Enter your name" style="display:none;" />
+            <button id="startButton" style="display:none;">Start</button>
+        </div>
+        <div id="count">0</div>
+        <button id="clickButton" class="circle-button">
+            <img src="static/button-image.png" alt="Click me!">
+        </button>
+        <div id="leaderboard">
+            <h2>Leaderboard</h2>
+            <ul id="leaderboardList"></ul>
+        </div>
+    </div>
+    <script src="static/script.js"></script>
+</body>
+</html>
