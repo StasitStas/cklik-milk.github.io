@@ -5,18 +5,25 @@ document.addEventListener('DOMContentLoaded', function() {
     const usernameDisplay = document.getElementById('usernameDisplay');
 
     let username = '';
+    let displayName = '';
     let clickCount = 0;
 
-    function getUsernameFromUrl() {
+    function getParametersFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get('username');
+        return {
+            username: urlParams.get('username'), // Отримуємо параметр 'username'
+            name: urlParams.get('name') // Отримуємо параметр 'name'
+        };
     }
 
     function initialize() {
-        username = getUsernameFromUrl();
-        if (username) {
-            usernameDisplay.textContent = username; // Display username at the top left
-            console.log(`Username: ${username}`);
+        const params = getParametersFromUrl();
+        username = params.username;
+        displayName = params.name;
+        
+        if (username && displayName) {
+            usernameDisplay.textContent = displayName; // Відображаємо ім'я в лівому верхньому куті
+            console.log(`Name: ${displayName}, Username: ${username}`);
             db.collection("clicks").doc(username).get().then(doc => {
                 if (doc.exists) {
                     clickCount = doc.data().clickCount || 0;
@@ -31,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error("Error getting document:", error);
             });
         } else {
-            alert('Помилка: Не вказано ім\'я користувача.');
+            alert('Помилка: Не вказано ім\'я або ім\'я користувача.');
         }
     }
 
