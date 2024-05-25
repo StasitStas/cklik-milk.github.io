@@ -15,6 +15,10 @@ body {
     height: 100vh;
 }
 
+.golden-text {
+    color: gold;
+}
+
 h1 {
     font-size: 2em;
     user-select: none;
