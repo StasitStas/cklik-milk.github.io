@@ -58,15 +58,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 index++;
                 const listItem = document.createElement('li');
                 listItem.textContent = `${index}. ${doc.id}: ${doc.data().clickCount} кліків`;
-
-                // Додаємо клас golden-text до вашого нікнейму
-                if (doc.id === username) {
-                    listItem.classList.add('golden-text');
-                    listItem.style.color = 'gold';
-                    listItem.style.textShadow = '1px 1px 2px black';
-                    listItem.style.backgroundColor = 'white';
-                }
-
                 leaderboardList.appendChild(listItem);
             });
         }).catch(error => {
