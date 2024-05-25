@@ -18,11 +18,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (doc.exists) {
                     clickCount = doc.data().clickCount || 0;
                     countDisplay.textContent = clickCount;
-                    updateLeaderboard();
                 } else {
                     // If the document does not exist, create it with initial clickCount value of 0
                     db.collection("clicks").doc(username).set({ clickCount: 0 });
                 }
+                updateLeaderboard();
             }).catch(error => {
                 console.error("Error getting document:", error);
             });
@@ -35,9 +35,9 @@ document.addEventListener('DOMContentLoaded', function() {
         if (username) {
             clickCount++;
             countDisplay.textContent = clickCount;
-            updateLeaderboard();
             // Update clickCount value in Firestore
             db.collection("clicks").doc(username).set({ clickCount });
+            updateLeaderboard();
         } else {
             alert('Помилка: Не вказано ім\'я користувача.');
         }
