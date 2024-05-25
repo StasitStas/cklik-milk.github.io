@@ -20,6 +20,18 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             alert('Помилка: Не вказано ім\'я користувача.');
         }
+
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAsF7gij6UPtXbiUkcGKcVIPxPQQLERCEU",
+            authDomain: "milky-clik.firebaseapp.com",
+            projectId: "milky-clik",
+            storageBucket: "milky-clik.appspot.com",
+            messagingSenderId: "796238736121",
+            appId: "1:796238736121:web:41cf1051e1be451f229028",
+            measurementId: "G-SB5NK6F2XK"
+        };
+        firebase.initializeApp(firebaseConfig);
     }
 
     button.addEventListener('click', function() {
