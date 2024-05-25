@@ -62,6 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Додаємо клас golden-text до вашого нікнейму
                 if (doc.id === username) {
                     listItem.classList.add('golden-text');
+                    listItem.style.color = 'gold';
+                    listItem.style.textShadow = '1px 1px 2px black';
+                    listItem.style.backgroundColor = 'white';
                 }
 
                 leaderboardList.appendChild(listItem);
