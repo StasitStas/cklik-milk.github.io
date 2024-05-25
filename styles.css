@@ -4,7 +4,7 @@ body {
     margin: 0;
     padding: 0;
     user-select: none;
-    background-color: #222222; /* Змінено колір фону на ще темніший сірий */
+    background-color: #222222;
 }
 
 .container {
@@ -23,6 +23,29 @@ body {
 
 .golden-text {
     color: gold;
+    background-color: #ffcc00;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.coin-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.coin-image {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.coin-count {
+    font-size: 2em;
+    font-weight: bold;
+    color: white;
 }
 
 h1 {
@@ -36,35 +59,23 @@ h1 {
     user-select: none;
 }
 
-#username {
-    margin-bottom: 10px;
-    padding: 10px;
-    font-size: 1em;
-}
-
-#startButton {
-    padding: 10px 20px;
-    font-size: 1em;
-    margin-bottom: 20px;
-}
-
 .circle-button {
-    width: 150px; /* Increased button size */
-    height: 150px; /* Increased button size */
-    border: 5px solid #3E6B70; /* Ще темніше обведення */
+    width: 150px;
+    height: 150px;
+    border: 5px solid #3E6B70;
     border-radius: 50%;
     padding: 0;
     cursor: pointer;
-    background: radial-gradient(circle, #5F9EA0 50%, #2e6f72 70%); /* Градієнт для темнішого краю кнопки */
+    background: radial-gradient(circle, #5F9EA0 50%, #2e6f72 70%);
     position: relative;
     outline: none;
-    overflow: hidden; 
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     user-select: none;
-    transition: transform 0.1s ease-out, box-shadow 0.5s; /* Transition for transform and box-shadow */
-    box-shadow: 0 0 10px 5px #333; /* Тінь для темнішого краю кнопки */
+    transition: transform 0.1s ease-out, box-shadow 0.5s;
+    box-shadow: 0 0 10px 5px #333;
 }
 
 .circle-button::after {
@@ -72,9 +83,9 @@ h1 {
     position: absolute;
     width: 100%;
     height: 100%;
-    top: 50%; /* Початкова позиція зсуву відносно верхнього краю контейнера */
-    left: 50%; /* Початкова позиція зсуву відносно лівого краю контейнера */
-    transform: translate(-50%, -50%); /* Центрування позиції */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 50%;
     background-color: #DDA0DD;
     opacity: 0;
@@ -95,10 +106,9 @@ h1 {
 }
 
 .circle-button:active {
-    transform: scale(0.99); /* Scale effect on active */
-    box-shadow: 0 0 10px 5px rgba(0, 123, 255, 0.5); /* Змінено колір миготіння на світло-синій та зменшено розмір тіні */
+    transform: scale(0.99);
+    box-shadow: 0 0 10px 5px rgba(0, 123, 255, 0.5);
 }
-
 
 @keyframes flash {
     0% {
@@ -115,11 +125,11 @@ h1 {
 #leaderboard {
     margin-top: 20px;
     text-align: left;
-    border: 2px solid #000; /* Black border */
-    border-radius: 10px; /* Rounded corners */
+    border: 2px solid #000;
+    border-radius: 10px;
     padding: 15px;
-    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #leaderboard h2 {
@@ -139,8 +149,8 @@ h1 {
 
 @media (max-width: 600px) {
     .circle-button {
-        width: 200px; /* Further increased size for mobile */
-        height: 200px; /* Further increased size for mobile */
+        width: 200px;
+        height: 200px;
     }
 
     h1 {
