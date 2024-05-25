@@ -14,9 +14,18 @@ document.addEventListener('DOMContentLoaded', function() {
     function initialize() {
         username = getUsernameFromUrl();
         if (username) {
-            clickCount = localStorage.getItem(username) || 0;
-            countDisplay.textContent = clickCount;
-            updateLeaderboard();
+            db.collection("clicks").doc(username).get().then(doc => {
+                if (doc.exists) {
+                    clickCount = doc.data().clickCount || 0;
+                    countDisplay.textContent = clickCount;
+                    updateLeaderboard();
+                } else {
+                    // If the document does not exist, create it with initial clickCount value of 0
+                    db.collection("clicks").doc(username).set({ clickCount: 0 });
+                }
+            }).catch(error => {
+                console.error("Error getting document:", error);
+            });
         } else {
             alert('Помилка: Не вказано ім\'я користувача.');
         }
@@ -25,35 +34,28 @@ document.addEventListener('DOMContentLoaded', function() {
     button.addEventListener('click', function() {
         if (username) {
             clickCount++;
-            localStorage.setItem(username, clickCount);
             countDisplay.textContent = clickCount;
             updateLeaderboard();
+            // Update clickCount value in Firestore
+            db.collection("clicks").doc(username).set({ clickCount });
         } else {
             alert('Помилка: Не вказано ім\'я користувача.');
         }
     });
 
     function updateLeaderboard() {
-        const users = Object.keys(localStorage).map(key => ({
-            name: key,
-            count: parseInt(localStorage.getItem(key))
-        }));
-
-        users.sort((a, b) => b.count - a.count);
-
-        leaderboardList.innerHTML = '';
-        users.slice(0, 5).forEach((user, index) => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${index + 1}. ${user.name}: ${user.count} кліків`;
-            leaderboardList.appendChild(listItem);
+        db.collection("clicks").orderBy("clickCount", "desc").limit(5).get().then(querySnapshot => {
+            leaderboardList.innerHTML = '';
+            let index = 0;
+            querySnapshot.forEach(doc => {
+                index++;
+                const listItem = document.createElement('li');
+                listItem.textContent = `${index}. ${doc.id}: ${doc.data().clickCount} кліків`;
+                leaderboardList.appendChild(listItem);
+            });
+        }).catch(error => {
+            console.error("Error getting documents: ", error);
         });
-
-        const currentUserIndex = users.findIndex(user => user.name === username);
-        if (currentUserIndex >= 5) {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${currentUserIndex + 1}. ${username}: ${clickCount} кліків`;
-            leaderboardList.appendChild(listItem);
-        }
     }
 
     button.addEventListener('mousedown', function(event) {
