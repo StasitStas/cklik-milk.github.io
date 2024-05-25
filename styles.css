@@ -4,7 +4,7 @@ body {
     margin: 0;
     padding: 0;
     user-select: none;
-    background: radial-gradient(circle at center, #ffffff, #cccccc, #333333, #000000);
+    background-color: #222222; /* Змінено колір фону на ще темніший сірий */
 }
 
 .container {
@@ -41,18 +41,38 @@ h1 {
 .circle-button {
     width: 150px; /* Increased button size */
     height: 150px; /* Increased button size */
-    border: 5px solid #000000; /* Thick black border */
+    border: 5px solid #3E6B70; /* Ще темніше обведення */
     border-radius: 50%;
     padding: 0;
     cursor: pointer;
-    background: none;
+    background: radial-gradient(circle, #5F9EA0 50%, #2e6f72 70%); /* Градієнт для темнішого краю кнопки */
     position: relative;
     outline: none;
+    overflow: hidden; 
     display: flex;
     align-items: center;
     justify-content: center;
     user-select: none;
-    transition: border-width 0.1s ease-out, transform 0.1s ease-out; /* Transition for border width and transform */
+    transition: transform 0.1s ease-out, box-shadow 0.5s; /* Transition for transform and box-shadow */
+    box-shadow: 0 0 10px 5px #333; /* Тінь для темнішого краю кнопки */
+}
+
+.circle-button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%; /* Початкова позиція зсуву відносно верхнього краю контейнера */
+    left: 50%; /* Початкова позиція зсуву відносно лівого краю контейнера */
+    transform: translate(-50%, -50%); /* Центрування позиції */
+    border-radius: 50%;
+    background-color: #DDA0DD;
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+.circle-button:active::after {
+    opacity: 1;
 }
 
 .circle-button img {
@@ -65,10 +85,10 @@ h1 {
 }
 
 .circle-button:active {
-    border-width: 2px; /* Narrow border on active */
     transform: scale(0.99); /* Scale effect on active */
-    animation: flash 0.5s; /* Trigger flash animation */
+    box-shadow: 0 0 10px 5px rgba(0, 123, 255, 0.5); /* Змінено колір миготіння на світло-синій та зменшено розмір тіні */
 }
+
 
 @keyframes flash {
     0% {
