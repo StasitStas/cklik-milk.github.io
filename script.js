@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const button = document.getElementById('clickButton');
     const countDisplay = document.getElementById('count');
     const leaderboardList = document.getElementById('leaderboardList');
+    const usernameDisplay = document.getElementById('usernameDisplay');
 
     let username = '';
     let clickCount = 0;
@@ -14,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function initialize() {
         username = getUsernameFromUrl();
         if (username) {
+            usernameDisplay.textContent = `Telegram: @${username}`; // Display username at the top left
             console.log(`Username: ${username}`);
             db.collection("clicks").doc(username).get().then(doc => {
                 if (doc.exists) {
