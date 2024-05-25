@@ -37,9 +37,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (username) {
             clickCount++;
             countDisplay.textContent = clickCount;
-            db.collection("clicks").doc(username).set({ clickCount });
-            console.log(`Updated Click Count for ${username}: ${clickCount}`);  // Додаємо логування
-            updateLeaderboard();
+            db.collection("clicks").doc(username).set({ clickCount })
+                .then(() => {
+                    console.log(`Updated Click Count for ${username}: ${clickCount}`);  // Додаємо логування
+                    updateLeaderboard();
+                })
+                .catch(error => {
+                    console.error("Error updating document:", error);
+                });
         } else {
             alert('Помилка: Не вказано ім\'я користувача.');
         }
