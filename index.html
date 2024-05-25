@@ -83,7 +83,7 @@
                     countDisplay.textContent = clickCount;
                     updateLeaderboard();
                     // Update clickCount value in Firestore
-                    db.collection("clicks").doc(username).update({ clickCount });
+                    db.collection("clicks").doc(username).set({ clickCount });
                 } else {
                     alert('Помилка: Не вказано ім\'я користувача.');
                 }
