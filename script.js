@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function vibrate() {
         if (navigator.vibrate) {
+            console.log("Вібрація спрацьовує"); // Додаємо логування
             navigator.vibrate(100); // Вібрація на 100 мс
         }
     }
