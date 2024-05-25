@@ -14,13 +14,15 @@ document.addEventListener('DOMContentLoaded', function() {
     function initialize() {
         username = getUsernameFromUrl();
         if (username) {
+            console.log(`Username: ${username}`);  // Додаємо логування
             db.collection("clicks").doc(username).get().then(doc => {
                 if (doc.exists) {
                     clickCount = doc.data().clickCount || 0;
                     countDisplay.textContent = clickCount;
+                    console.log(`Initial Click Count: ${clickCount}`);  // Додаємо логування
                 } else {
-                    // If the document does not exist, create it with initial clickCount value of 0
                     db.collection("clicks").doc(username).set({ clickCount: 0 });
+                    console.log(`Document created for ${username}`);  // Додаємо логування
                 }
                 updateLeaderboard();
             }).catch(error => {
@@ -35,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (username) {
             clickCount++;
             countDisplay.textContent = clickCount;
-            // Update clickCount value in Firestore
             db.collection("clicks").doc(username).set({ clickCount });
+            console.log(`Updated Click Count for ${username}: ${clickCount}`);  // Додаємо логування
             updateLeaderboard();
         } else {
             alert('Помилка: Не вказано ім\'я користувача.');
@@ -57,28 +59,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error("Error getting documents: ", error);
         });
     }
-
-    button.addEventListener('mousedown', function(event) {
-        const rect = button.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const offsetX = (x - centerX) / centerX * 5;
-        const offsetY = (y - centerY) / centerY * 5;
-
-        button.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(0.99)`;
-    });
-
-    button.addEventListener('mouseup', function() {
-        button.style.transform = 'translate(0, 0) scale(1)';
-    });
-
-    button.addEventListener('mouseleave', function() {
-        button.style.transform = 'translate(0, 0) scale(1)';
-    });
 
     initialize();
 });
