@@ -13,13 +13,12 @@
         </div>
         <div class="coin-container">
             <img src="coin.png" alt="Coin" class="coin-image">
-            <span id="coinCount" class="coin-count">238 937</span>
+            <span id="count">0</span>
         </div>
         <div>
             <input type="text" id="username" placeholder="Enter your name" style="display:none;" />
             <button id="startButton" style="display:none;">Start</button>
         </div>
-        <div id="count">0</div>
         <button id="clickButton" class="circle-button">
             <img src="img_milky.png" alt="Click me!">
         </button>
@@ -28,13 +27,11 @@
             <ul id="leaderboardList"></ul>
         </div>
     </div>
-    <script src="script.js"></script>
-    <!-- Include Firebase scripts -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <script>
-        // Your web app's Firebase configuration
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAsF7gij6UPtXbiUkcGKcVIPxPQQLERCEU",
             authDomain: "milky-clik.firebaseapp.com",
@@ -49,5 +46,6 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
     </script>
+    <script src="script.js"></script>
 </body>
 </html>
