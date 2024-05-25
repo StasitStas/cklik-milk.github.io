@@ -33,6 +33,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    function vibrate() {
+        if (navigator.vibrate) {
+            navigator.vibrate(100); // Вібрація на 100 мс
+        }
+    }
+
     button.addEventListener('click', function() {
         if (username) {
             clickCount++;
@@ -45,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 .catch(error => {
                     console.error("Error updating document:", error);
                 });
+            vibrate(); // Додаємо виклик функції вібрації тут
         } else {
             alert('Помилка: Не вказано ім\'я користувача.');
         }
