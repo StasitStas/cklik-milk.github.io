@@ -14,15 +14,15 @@ document.addEventListener('DOMContentLoaded', function() {
     function initialize() {
         username = getUsernameFromUrl();
         if (username) {
-            console.log(`Username: ${username}`);  // Додаємо логування
+            console.log(`Username: ${username}`);
             db.collection("clicks").doc(username).get().then(doc => {
                 if (doc.exists) {
                     clickCount = doc.data().clickCount || 0;
                     countDisplay.textContent = clickCount;
-                    console.log(`Initial Click Count: ${clickCount}`);  // Додаємо логування
+                    console.log(`Initial Click Count: ${clickCount}`);
                 } else {
                     db.collection("clicks").doc(username).set({ clickCount: 0 });
-                    console.log(`Document created for ${username}`);  // Додаємо логування
+                    console.log(`Document created for ${username}`);
                 }
                 updateLeaderboard();
             }).catch(error => {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             countDisplay.textContent = clickCount;
             db.collection("clicks").doc(username).set({ clickCount })
                 .then(() => {
-                    console.log(`Updated Click Count for ${username}: ${clickCount}`);  // Додаємо логування
+                    console.log(`Updated Click Count for ${username}: ${clickCount}`);
                     updateLeaderboard();
                 })
                 .catch(error => {
