@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const countDisplay = document.getElementById('count');
     const leaderboardList = document.getElementById('leaderboardList');
     const usernameDisplay = document.getElementById('usernameDisplay');
-    const userAvatar = document.getElementById('userAvatar');
     const clickEffectContainer = document.getElementById('clickEffectContainer');
 
     let username = '';
@@ -18,19 +17,6 @@ document.addEventListener('DOMContentLoaded', function() {
         username = getUsernameFromUrl();
         if (username) {
             usernameDisplay.textContent = username; // Відображення імені користувача у верхньому лівому кутку
-
-            // Отримання аватарки користувача
-            fetch(`https://api.telegram.org/bot${TOKEN}/getUserProfilePhotos?user_id=${username}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok && data.result.photos.length > 0) {
-                        const avatarUrl = `https://api.telegram.org/file/bot${TOKEN}/${data.result.photos[0][0].file_id}`;
-                        userAvatar.src = avatarUrl;
-                    } else {
-                        userAvatar.src = 'default-avatar.png'; // Шлях до стандартної аватарки
-                    }
-                });
-
             console.log(`Username: ${username}`);
             db.collection("clicks").doc(username).get().then(doc => {
                 if (doc.exists) {
