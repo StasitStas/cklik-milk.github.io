@@ -278,6 +278,16 @@ body {
     opacity: 1;
 }
 
+.cog-icon {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 32px; /* Розмір іконки */
+    color: white; /* Колір іконки */
+    z-index: 999; /* Забезпечення відобраення поверх інших елементів */
+    cursor: pointer; /* Змінення вигляду курсору при наведенні */
+}
+
 .circle-button img {
     width: 100%;
     height: 100%;
@@ -379,13 +389,4 @@ body {
     }
 }
 
-.cog-icon {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 32px; /* Розмір іконки */
-    color: white; /* Колір іконки */
-    z-index: 999; /* Забезпечення відображення поверх інших елементів */
-    cursor: pointer; /* Змінення вигляду курсору при наведенні */
-}
 
