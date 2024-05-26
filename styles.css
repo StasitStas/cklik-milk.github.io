@@ -185,6 +185,7 @@ body {
     animation: riseAndFade 1s ease-out;
     pointer-events: none;
     user-select: none;
+    touch-action: manipulation; /* Додано для підтримки анімації на мобільних пристроях */
 }
 
 @keyframes riseAndFade {
