@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function initialize() {
         username = getUsernameFromUrl();
         if (username) {
-            usernameDisplay.textContent = username; // Display username at the top left
+            usernameDisplay.textContent = username;
             console.log(`Username: ${username}`);
             db.collection("clicks").doc(username).get().then(doc => {
                 if (doc.exists) {
@@ -38,42 +38,56 @@ document.addEventListener('DOMContentLoaded', function() {
     function vibrate() {
         if (navigator.vibrate) {
             console.log("Вібрація спрацьовує");
-            navigator.vibrate(100);
+            navigator.vibrate(200);
         }
     }
-
-    button.addEventListener('click', function() {
-        if (username) {
-            clickCount++;
-            countDisplay.textContent = clickCount;
-            db.collection("clicks").doc(username).set({ clickCount })
-                .then(() => {
-                    console.log(`Updated Click Count for ${username}: ${clickCount}`);
-                    updateLeaderboard();
-                })
-                .catch(error => {
-                    console.error("Error updating document:", error);
-                });
-            vibrate();
-        } else {
-            alert('Помилка: Не вказано ім\'я користувача.');
-        }
-    });
 
     function updateLeaderboard() {
         db.collection("clicks").orderBy("clickCount", "desc").limit(5).get().then(querySnapshot => {
             leaderboardList.innerHTML = '';
-            let index = 0;
-            querySnapshot.forEach(doc => {
-                index++;
-                const listItem = document.createElement('li');
-                listItem.textContent = `${index}. ${doc.id}: ${doc.data().clickCount} кліків`;
-                leaderboardList.appendChild(listItem);
+            let userFoundInTop5 = false;
+            let rank = 0;
+
+            querySnapshot.forEach((doc, index) => {
+                rank++;
+                const li = document.createElement('li');
+                li.textContent = `${index + 1}. ${doc.id} - ${doc.data().clickCount}`;
+                leaderboardList.appendChild(li);
+
+                if (doc.id === username) {
+                    userFoundInTop5 = true;
+                }
             });
-        }).catch(error => {
-            console.error("Error getting documents: ", error);
+
+            if (!userFoundInTop5) {
+                db.collection("clicks").orderBy("clickCount", "desc").get().then(allDocs => {
+                    let userRank = 0;
+                    allDocs.forEach((doc, index) => {
+                        if (doc.id === username) {
+                            userRank = index + 1;
+                        }
+                    });
+
+                    const userRankItem = document.createElement('li');
+                    userRankItem.textContent = `${userRank}. ${username} - ${clickCount}`;
+                    leaderboardList.appendChild(userRankItem);
+                });
+            }
         });
     }
+
+    button.addEventListener('click', () => {
+        clickCount++;
+        countDisplay.textContent = clickCount;
+        vibrate();
+
+        db.collection("clicks").doc(username).update({ clickCount: clickCount }).then(() => {
+            console.log(`Click Count updated: ${clickCount}`);
+            updateLeaderboard();
+        }).catch(error => {
+            console.error("Error updating click count:", error);
+        });
+    });
 
     initialize();
 });
