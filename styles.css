@@ -180,8 +180,8 @@ body {
 
 .click-effect {
     position: absolute;
-    font-size: 2em;
-    color: #FFD700;
+    font-size: 2.4em;
+    color: #FFFFFF;
     animation: riseAndFade 1s ease-out;
     pointer-events: none;
     user-select: none;
@@ -190,7 +190,7 @@ body {
 
 @keyframes riseAndFade {
     0% {
-        transform: translateY(0);
+        transform: translateY(-10px);
         opacity: 1;
     }
     100% {
