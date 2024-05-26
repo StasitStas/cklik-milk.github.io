@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const countDisplay = document.getElementById('count');
     const leaderboardList = document.getElementById('leaderboardList');
     const usernameDisplay = document.getElementById('usernameDisplay');
+    const clickEffectContainer = document.getElementById('clickEffectContainer');
 
     let username = '';
     let clickCount = 0;
@@ -42,7 +43,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    button.addEventListener('click', function() {
+    function createClickEffect(x, y) {
+        const clickEffect = document.createElement('span');
+        clickEffect.textContent = '+1';
+        clickEffect.className = 'click-effect';
+        clickEffect.style.left = `${x}px`;
+        clickEffect.style.top = `${y}px`;
+        clickEffectContainer.appendChild(clickEffect);
+
+        setTimeout(() => {
+            clickEffect.remove();
+        }, 1000);
+    }
+
+    button.addEventListener('click', function(event) {
         if (username) {
             clickCount++;
             countDisplay.textContent = clickCount;
@@ -55,6 +69,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error("Error updating document:", error);
                 });
             vibrate();
+
+            const rect = button.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            createClickEffect(x, y);
         } else {
             alert('Помилка: Не вказано ім\'я користувача.');
         }
@@ -67,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
             querySnapshot.forEach(doc => {
                 index++;
                 const listItem = document.createElement('li');
-                listItem.textContent = `${index}. ${doc.id}: ${doc.data().clickCount} кліків`;
+                listItem.textContent = `${index}. ${doc.id}: ${doc.data().clickCount}`;
                 leaderboardList.appendChild(listItem);
             });
         }).catch(error => {
