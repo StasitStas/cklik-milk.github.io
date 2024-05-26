@@ -58,7 +58,7 @@ body {
 .click-count {
     font-size: 3em;
     font-weight: bold;
-    color: white;
+    color: white; /* зміна кольору на білий */
 }
 
 .circle-button {
@@ -125,6 +125,7 @@ body {
 #leaderboard h2 {
     font-size: 1.5em;
     margin-top: 0;
+    text-align: center;
 }
 
 #leaderboardList {
@@ -134,27 +135,32 @@ body {
 }
 
 #leaderboardList li {
+    margin: 5px 0;
     display: flex;
     justify-content: space-between;
-    padding: 5px;
-    background: #fff;
-    margin: 5px 0;
+    align-items: center;
+    padding: 5px 10px;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.leaderboard-rank {
-    font-weight: bold;
+#leaderboardList li:nth-child(1) {
+    background-color: #ffd700;
 }
 
-.leaderboard-name {
-    flex-grow: 1;
-    text-align: center;
+#leaderboardList li:nth-child(2) {
+    background-color: #c0c0c0;
 }
 
-.leaderboard-clicks {
-    font-weight: bold;
-    color: #333;
+#leaderboardList li:nth-child(3) {
+    background-color: #cd7f32;
+}
+
+#leaderboardList li:nth-child(odd) {
+    background-color: #f0f0f0;
+}
+
+#leaderboardList li:nth-child(even) {
+    background-color: #e0e0e0;
 }
 
 @media (max-width: 600px) {
