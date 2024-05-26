@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function initialize() {
         username = getUsernameFromUrl();
         if (username) {
-            usernameDisplay.textContent = username;
+            usernameDisplay.textContent = username; // Відображення імені користувача у верхньому лівому кутку
             console.log(`Username: ${username}`);
             db.collection("clicks").doc(username).get().then(doc => {
                 if (doc.exists) {
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     cogIcon.addEventListener('click', function() {
-        window.location.href = `https://stasitstas.github.io/cklik-milk.github.io/?username=${username}`;
+        window.location.href = `about.html?username=${username}`;
     });
 
     function updateLeaderboard() {
