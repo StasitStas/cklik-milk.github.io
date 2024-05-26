@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function getUsernameFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get('username');
+        return urlParams.get('username') || '';
     }
 
     function initialize() {
