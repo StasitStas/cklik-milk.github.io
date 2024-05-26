@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const leaderboardList = document.getElementById('leaderboardList');
     const usernameDisplay = document.getElementById('usernameDisplay');
     const clickEffectContainer = document.getElementById('clickEffectContainer');
-    const settingsIcon = document.getElementById('settingsIcon');
+    const settingsIcon = document.querySelector('.cog-icon');
     const settingsWindow = document.getElementById('settingsWindow');
     const animationToggle = document.getElementById('animationToggle');
     const vibrationToggle = document.getElementById('vibrationToggle');
