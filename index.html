@@ -12,8 +12,17 @@
     <div class="container">
         <div class="header">
             <span id="usernameDisplay" class="golden-text"></span>
-            <!-- Додавання іконки -->
-            <i class="las la-cog cog-icon"></i>
+            <i class="las la-cog cog-icon" id="settingsIcon"></i>
+        </div>
+        <div class="settings-window" id="settingsWindow">
+            <label>
+                <input type="checkbox" id="animationToggle" checked>
+                Анімація
+            </label>
+            <label>
+                <input type="checkbox" id="vibrationToggle" checked>
+                Вібрація
+            </label>
         </div>
         <div class="coin-container">
             <img src="coin.png" alt="Coin" class="coin-image">
