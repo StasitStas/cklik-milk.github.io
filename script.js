@@ -43,35 +43,34 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateLeaderboard() {
-        db.collection("clicks").orderBy("clickCount", "desc").limit(5).get().then(querySnapshot => {
+        db.collection("clicks").orderBy("clickCount", "desc").get().then(querySnapshot => {
             leaderboardList.innerHTML = '';
+            let userRank = -1;
             let userFoundInTop5 = false;
-            let rank = 0;
+            let top5Count = 0;
 
             querySnapshot.forEach((doc, index) => {
-                rank++;
-                const li = document.createElement('li');
-                li.textContent = `${index + 1}. ${doc.id} - ${doc.data().clickCount}`;
-                leaderboardList.appendChild(li);
+                if (top5Count < 5) {
+                    const li = document.createElement('li');
+                    li.textContent = `${index + 1}. ${doc.id} - ${doc.data().clickCount}`;
+                    leaderboardList.appendChild(li);
+
+                    if (doc.id === username) {
+                        userFoundInTop5 = true;
+                    }
+
+                    top5Count++;
+                }
 
                 if (doc.id === username) {
-                    userFoundInTop5 = true;
+                    userRank = index + 1;
                 }
             });
 
-            if (!userFoundInTop5) {
-                db.collection("clicks").orderBy("clickCount", "desc").get().then(allDocs => {
-                    let userRank = 0;
-                    allDocs.forEach((doc, index) => {
-                        if (doc.id === username) {
-                            userRank = index + 1;
-                        }
-                    });
-
-                    const userRankItem = document.createElement('li');
-                    userRankItem.textContent = `${userRank}. ${username} - ${clickCount}`;
-                    leaderboardList.appendChild(userRankItem);
-                });
+            if (!userFoundInTop5 && userRank > 5) {
+                const userRankItem = document.createElement('li');
+                userRankItem.textContent = `${userRank}. ${username} - ${clickCount}`;
+                leaderboardList.appendChild(userRankItem);
             }
         });
     }
