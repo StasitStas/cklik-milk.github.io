@@ -180,8 +180,8 @@ body {
 
 .click-effect {
     position: absolute;
-    font-size: 2.4em;
-    color: #FFFFFF;
+    font-size: 2em;
+    color: #FFFFFF; /* Змінено на білий колір */
     animation: riseAndFade 1s ease-out;
     pointer-events: none;
     user-select: none;
@@ -190,12 +190,11 @@ body {
 
 @keyframes riseAndFade {
     0% {
-        transform: translateY(-10px);
+        transform: translateY(0);
         opacity: 1;
     }
     100% {
-        transform: translateY(-40px);
+        transform: translateY(-30px);
         opacity: 0;
     }
 }
-
