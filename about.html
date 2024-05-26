@@ -5,14 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Посилання на бібліотеку Line Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/line-awesome/dist/line-awesome/css/line-awesome.min.css" rel="stylesheet">
+    <style>
+        /* Стилі для іконки у верхньому правому кутку */
+        .back-icon {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 24px; /* Розмір іконки */
+            color: black; /* Колір іконки */
+            z-index: 999; /* Забезпечення відображення поверх інших елементів */
+            cursor: pointer; /* Змінення вигляду курсору при наведенні */
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <span id="usernameDisplay" class="golden-text"></span>
-            <!-- Додавання іконки -->
-            <a href="index.html"><i class="las la-cog cog-icon"></i></a>
-        </div>
+        <h1>About Page</h1>
+        <p>This is the about page.</p>
     </div>
+    <!-- Додавання іконки для переходу на головну сторінку -->
+    <a href="index.html"><i class="las la-arrow-left back-icon"></i></a>
 </body>
 </html>
