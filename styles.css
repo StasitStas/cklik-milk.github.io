@@ -37,8 +37,8 @@ body {
     border-top: 1px solid #ffcc00;
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    left: 0;
+    transform: translate(0, -50%);
     z-index: 0;
 }
 
