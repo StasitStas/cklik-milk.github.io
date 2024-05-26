@@ -58,7 +58,7 @@ body {
 .click-count {
     font-size: 3em;
     font-weight: bold;
-    color: white; /* зміна кольору на білий */
+    color: white;
 }
 
 .circle-button {
@@ -134,7 +134,27 @@ body {
 }
 
 #leaderboardList li {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    background: #fff;
     margin: 5px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard-rank {
+    font-weight: bold;
+}
+
+.leaderboard-name {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.leaderboard-clicks {
+    font-weight: bold;
+    color: #333;
 }
 
 @media (max-width: 600px) {
