@@ -4,14 +4,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const leaderboardList = document.getElementById('leaderboardList');
     const usernameDisplay = document.getElementById('usernameDisplay');
     const clickEffectContainer = document.getElementById('clickEffectContainer');
-    const cogIcon = document.querySelector('.cog-icon');
 
     let username = '';
     let clickCount = 0;
 
     function getUsernameFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
-        return urlParams.get('username') || '';
+        return urlParams.get('username');
     }
 
     function initialize() {
@@ -81,12 +80,6 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Помилка: Ім\'я користувача не вказане.');
         }
     });
-
-    if (cogIcon) {
-        cogIcon.addEventListener('click', function() {
-            window.location.href = `about.html?username=${username}`;
-        });
-    }
 
     function updateLeaderboard() {
         db.collection("clicks").orderBy("clickCount", "desc").limit(5).get().then(querySnapshot => {
