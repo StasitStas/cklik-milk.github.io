@@ -80,9 +80,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    button.addEventListener('click', function(event) {
+    button.addEventListener('touchstart', function(event) {
+        event.preventDefault(); // Запобігає стандартному поведінці, наприклад, прокручуванню
         if (username) {
-            clickCount++;
+            const touchPoints = Math.min(event.touches.length, 4); // Максимум 4 натискання
+            clickCount += touchPoints;
             countDisplay.textContent = clickCount;
             db.collection("clicks").doc(username).set({ clickCount })
                 .then(() => {
@@ -95,9 +97,12 @@ document.addEventListener('DOMContentLoaded', function() {
             vibrate();
 
             const rect = button.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
-            createClickEffect(x, y);
+            for (let i = 0; i < touchPoints; i++) {
+                const touch = event.touches[i];
+                const x = touch.clientX - rect.left;
+                const y = touch.clientY - rect.top;
+                createClickEffect(x, y);
+            }
         } else {
             alert('Помилка: Ім\'я користувача не вказане.');
         }
