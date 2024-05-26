@@ -58,7 +58,7 @@ body {
 .click-count {
     font-size: 3em;
     font-weight: bold;
-    color: white;
+    color: white; /* зміна кольору на білий */
 }
 
 .circle-button {
