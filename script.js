@@ -40,6 +40,23 @@ document.addEventListener('DOMContentLoaded', function() {
         if (navigator.vibrate) {
             console.log("Вібрація спрацьовує");
             navigator.vibrate(100);
+        } else if (window.navigator && window.navigator.vibrate) {
+            console.log("Вібрація через альтернативний метод");
+            window.navigator.vibrate(100);
+        } else if (window && window.navigator && window.navigator.userAgent && /iPhone|iPad|iPod/.test(window.navigator.userAgent)) {
+            // Use Haptic Feedback API for iOS devices
+            if (window.navigator.vibrate) {
+                window.navigator.vibrate(100);
+            } else if (window.navigator && window.navigator.userAgent && window.navigator.userAgent.indexOf('Safari') !== -1) {
+                window.navigator.userAgentData.vibrate(100);
+            } else {
+                // Fallback to haptic feedback for iOS
+                try {
+                    window.navigator.vibrate(100);
+                } catch (e) {
+                    console.log("Haptic feedback not supported");
+                }
+            }
         }
     }
 
