@@ -37,9 +37,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function vibrate() {
-        if (navigator.vibrate) {
+        try {
+            window.navigator.vibrate(50);
             console.log("Вібрація працює");
-            navigator.vibrate(50); // Змінено тривалість вібрації на 50 мс
+        } catch (error) {
+            console.error("Помилка вібрації:", error);
         }
     }
 
