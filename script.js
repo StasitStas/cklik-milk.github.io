@@ -4,9 +4,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const leaderboardList = document.getElementById('leaderboardList');
     const usernameDisplay = document.getElementById('usernameDisplay');
     const clickEffectContainer = document.getElementById('clickEffectContainer');
+    const settingsIcon = document.getElementById('settingsIcon');
+    const settingsWindow = document.getElementById('settingsWindow');
+    const animationToggle = document.getElementById('animationToggle');
+    const vibrationToggle = document.getElementById('vibrationToggle');
 
     let username = '';
     let clickCount = 0;
+    let enableAnimation = true;
+    let enableVibration = true;
+
+    settingsIcon.addEventListener('click', function() {
+        settingsWindow.style.display = settingsWindow.style.display === 'none' ? 'block' : 'none';
+    });
+
+    animationToggle.addEventListener('change', function() {
+        enableAnimation = animationToggle.checked;
+    });
+
+    vibrationToggle.addEventListener('change', function() {
+        enableVibration = vibrationToggle.checked;
+    });
 
     function getUsernameFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -37,25 +55,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function vibrate() {
-        try {
-            window.navigator.vibrate(50);
-            console.log("Вібрація працює");
-        } catch (error) {
-            console.error("Помилка вібрації:", error);
+        if (enableVibration) {
+            try {
+                window.navigator.vibrate(50);
+                console.log("Вібрація працює");
+            } catch (error) {
+                console.error("Помилка вібрації:", error);
+            }
         }
     }
 
     function createClickEffect(x, y) {
-        const clickEffect = document.createElement('span');
-        clickEffect.textContent = '+1';
-        clickEffect.className = 'click-effect';
-        clickEffect.style.left = `${x}px`;
-        clickEffect.style.top = `${y}px`;
-        clickEffectContainer.appendChild(clickEffect);
+        if (enableAnimation) {
+            const clickEffect = document.createElement('span');
+            clickEffect.textContent = '+1';
+            clickEffect.className = 'click-effect';
+            clickEffect.style.left = `${x}px`;
+            clickEffect.style.top = `${y}px`;
+            clickEffectContainer.appendChild(clickEffect);
 
-        setTimeout(() => {
-            clickEffect.remove();
-        }, 1000);
+            setTimeout(() => {
+                clickEffect.remove();
+            }, 1000);
+        }
     }
 
     button.addEventListener('click', function(event) {
