@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const leaderboardList = document.getElementById('leaderboardList');
     const usernameDisplay = document.getElementById('usernameDisplay');
     const clickEffectContainer = document.getElementById('clickEffectContainer');
+    const cogIcon = document.querySelector('.cog-icon');
 
     let username = '';
     let clickCount = 0;
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function initialize() {
         username = getUsernameFromUrl();
         if (username) {
-            usernameDisplay.textContent = username; // Відображення імені користувача у верхньому лівому кутку
+            usernameDisplay.textContent = username;
             console.log(`Username: ${username}`);
             db.collection("clicks").doc(username).get().then(doc => {
                 if (doc.exists) {
@@ -79,6 +80,10 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             alert('Помилка: Ім\'я користувача не вказане.');
         }
+    });
+
+    cogIcon.addEventListener('click', function() {
+        window.location.href = `https://stasitstas.github.io/cklik-milk.github.io/?username=${username}`;
     });
 
     function updateLeaderboard() {
