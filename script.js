@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function initialize() {
         username = getUsernameFromUrl();
         if (username) {
-            usernameDisplay.textContent = username; // Display username at the top left
+            usernameDisplay.textContent = username; // Відображення імені користувача у верхньому лівому кутку
             console.log(`Username: ${username}`);
             db.collection("clicks").doc(username).get().then(doc => {
                 if (doc.exists) {
@@ -32,23 +32,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error("Error getting document:", error);
             });
         } else {
-            alert('Помилка: Не вказано ім\'я користувача.');
+            alert('Помилка: Ім\'я користувача не вказане.');
         }
     }
 
     function vibrate() {
         if (navigator.vibrate) {
-            console.log("Вібрація спрацьовує");
-            navigator.vibrate(100);
-        } else if (window.navigator && window.navigator.vibrate) {
-            console.log("Вібрація через альтернативний метод");
-            window.navigator.vibrate(100);
-        } else {
-            try {
-                window.navigator.vibrate(100);
-            } catch (e) {
-                console.log("Вібрація не підтримується");
-            }
+            console.log("Вібрація працює");
+            navigator.vibrate(50); // Змінено тривалість вібрації на 50 мс
         }
     }
 
@@ -71,11 +62,11 @@ document.addEventListener('DOMContentLoaded', function() {
             countDisplay.textContent = clickCount;
             db.collection("clicks").doc(username).set({ clickCount })
                 .then(() => {
-                    console.log(`Updated Click Count for ${username}: ${clickCount}`);
+                    console.log(`Оновлено кількість кліків для ${username}: ${clickCount}`);
                     updateLeaderboard();
                 })
                 .catch(error => {
-                    console.error("Error updating document:", error);
+                    console.error("Помилка оновлення документа:", error);
                 });
             vibrate();
 
@@ -84,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const y = event.clientY - rect.top;
             createClickEffect(x, y);
         } else {
-            alert('Помилка: Не вказано ім\'я користувача.');
+            alert('Помилка: Ім\'я користувача не вказане.');
         }
     });
 
@@ -99,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 leaderboardList.appendChild(listItem);
             });
         }).catch(error => {
-            console.error("Error getting documents: ", error);
+            console.error("Помилка отримання документів: ", error);
         });
     }
 
