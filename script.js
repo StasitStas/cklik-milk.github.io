@@ -82,9 +82,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    cogIcon.addEventListener('click', function() {
-        window.location.href = `about.html?username=${username}`;
-    });
+    if (cogIcon) {
+        cogIcon.addEventListener('click', function() {
+            window.location.href = `about.html?username=${username}`;
+        });
+    }
 
     function updateLeaderboard() {
         db.collection("clicks").orderBy("clickCount", "desc").limit(5).get().then(querySnapshot => {
