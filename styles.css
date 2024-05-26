@@ -181,23 +181,21 @@ body {
 .click-effect {
     position: absolute;
     font-size: 2em;
-    color: #FFFFFF;
+    color: #FFD700;
     animation: riseAndFade 1s ease-out;
     pointer-events: none;
     user-select: none;
-    top: 50%; /* Початкова позиція по вертикалі на 50% */
-    left: 50%; /* Початкова позиція по горизонталі на 50% */
-    transform: translate(-50%, -50%); /* Центрування по обох вісях */
     touch-action: manipulation; /* Додано для підтримки анімації на мобільних пристроях */
 }
 
 @keyframes riseAndFade {
     0% {
-        transform: translate(-50%, -50%) translateY(0); /* Змінено на translateY(0) */
+        transform: translateY(0);
         opacity: 1;
     }
     100% {
-        transform: translate(-50%, -50%) translateY(-50px); /* Позиція по вертикалі на -50px */
+        transform: translateY(-40px);
         opacity: 0;
     }
 }
+
