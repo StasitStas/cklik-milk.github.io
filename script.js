@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const settingsWindow = document.getElementById('settingsWindow');
     const animationToggle = document.getElementById('animationToggle');
     const vibrationToggle = document.getElementById('vibrationToggle');
+    const subscribeButton = document.getElementById('subscribeButton');
+    const bonusButton = document.getElementById('bonusButton');
 
     let username = '';
     let clickCount = 0;
@@ -34,16 +36,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function initialize() {
         username = getUsernameFromUrl();
         if (username) {
-            usernameDisplay.textContent = username; // Відображення імені користувача у верхньому лівому кутку
-            console.log(`Username: ${username}`);
+            usernameDisplay.textContent = username;
             db.collection("clicks").doc(username).get().then(doc => {
                 if (doc.exists) {
                     clickCount = doc.data().clickCount || 0;
                     countDisplay.textContent = clickCount;
-                    console.log(`Initial Click Count: ${clickCount}`);
                 } else {
                     db.collection("clicks").doc(username).set({ clickCount: 0 });
-                    console.log(`Document created for ${username}`);
                 }
                 updateLeaderboard();
             }).catch(error => {
@@ -58,7 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (enableVibration) {
             try {
                 window.navigator.vibrate(50);
-                console.log("Вібрація працює");
             } catch (error) {
                 console.error("Помилка вібрації:", error);
             }
@@ -81,14 +79,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     button.addEventListener('touchstart', function(event) {
-        event.preventDefault(); // Запобігає стандартному поведінці, наприклад, прокручуванню
+        event.preventDefault();
         if (username) {
-            const touchPoints = Math.min(event.touches.length, 4); // Максимум 4 натискання
+            const touchPoints = Math.min(event.touches.length, 4);
             clickCount += touchPoints;
             countDisplay.textContent = clickCount;
             db.collection("clicks").doc(username).set({ clickCount })
                 .then(() => {
-                    console.log(`Оновлено кількість кліків для ${username}: ${clickCount}`);
                     updateLeaderboard();
                 })
                 .catch(error => {
@@ -122,6 +119,34 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error("Помилка отримання документів: ", error);
         });
     }
+
+    // Function to open Telegram bot subscription
+    function subscribeToChannel() {
+        const telegramLink = "https://t.me/mqilky";  // Replace with your Telegram channel link
+        window.open(telegramLink, "_blank");
+    }
+
+    // Function to update click count with bonus
+    function claimBonus() {
+        db.collection("clicks").doc(username).get().then(doc => {
+            if (doc.exists) {
+                clickCount += 100;  // Add 100 clicks as a bonus
+                countDisplay.textContent = clickCount;
+                db.collection("clicks").doc(username).set({ clickCount })
+                    .then(() => {
+                        updateLeaderboard();
+                    })
+                    .catch(error => {
+                        console.error("Помилка оновлення документа:", error);
+                    });
+            }
+        }).catch(error => {
+            console.error("Error getting document:", error);
+        });
+    }
+
+    subscribeButton.addEventListener('click', subscribeToChannel);
+    bonusButton.addEventListener('click', claimBonus);
 
     initialize();
 });
