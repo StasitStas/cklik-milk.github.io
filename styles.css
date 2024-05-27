@@ -106,10 +106,10 @@ body {
     position: fixed;
     top: 10px;
     right: 10px;
-    font-size: 32px; /* Розмір іконки */
-    color: white; /* Колір іконки */
-    z-index: 999; /* Забезпечення відображення поверх інших елементів */
-    cursor: pointer; /* Змінення вигляду курсору при наведенні */
+    font-size: 32px;
+    color: white;
+    z-index: 999;
+    cursor: pointer;
 }
 
 #leaderboard {
@@ -217,4 +217,16 @@ body {
     margin-bottom: 10px;
 }
 
+#subscribeButton, #bonusButton {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3E6B70;
+    color: white;
+    cursor: pointer;
+}
 
+#subscribeButton:hover, #bonusButton:hover {
+    background-color: #5F9EA0;
+}
