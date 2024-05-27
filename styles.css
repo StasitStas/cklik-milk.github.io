@@ -207,3 +207,17 @@
     display: block;
     margin-bottom: 10px;
 }
+
+#subscribeButton, #bonusButton {
+    margin-top: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #3E6B70;
+    color: white;
+    cursor: pointer;
+}
+
+#subscribeButton:hover, #bonusButton:hover {
+    background-color: #5F9EA0;
+}
