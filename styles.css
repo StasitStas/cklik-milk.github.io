@@ -230,26 +230,3 @@ body {
 #subscribeButton:hover, #bonusButton:hover {
     background-color: #5F9EA0;
 }
-
-.telegram-icon {
-    position: fixed;
-    top: 10px;
-    right: 50px;
-    font-size: 38px;
-    color: white;
-    z-index: 999;
-    cursor: pointer;
-}
-
-.telegram-window {
-    display: none;
-    position: absolute;
-    top: 50px;
-    right: 10px;
-    background-color: #333;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    color: white;
-    z-index: 1000;
-}
