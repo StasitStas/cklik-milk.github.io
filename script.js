@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let clickCount = 0;
     let enableAnimation = true;
     let enableVibration = true;
+    let bonusClaimed = false;
 
     settingsIcon.addEventListener('click', function() {
         settingsWindow.style.display = settingsWindow.style.display === 'none' ? 'block' : 'none';
@@ -40,9 +41,13 @@ document.addEventListener('DOMContentLoaded', function() {
             db.collection("clicks").doc(username).get().then(doc => {
                 if (doc.exists) {
                     clickCount = doc.data().clickCount || 0;
+                    bonusClaimed = doc.data().bonusClaimed || false;
                     countDisplay.textContent = clickCount;
+                    if (bonusClaimed) {
+                        bonusButton.disabled = true;
+                    }
                 } else {
-                    db.collection("clicks").doc(username).set({ clickCount: 0 });
+                    db.collection("clicks").doc(username).set({ clickCount: 0, bonusClaimed: false });
                 }
                 updateLeaderboard();
             }).catch(error => {
@@ -84,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const touchPoints = Math.min(event.touches.length, 4);
             clickCount += touchPoints;
             countDisplay.textContent = clickCount;
-            db.collection("clicks").doc(username).set({ clickCount })
+            db.collection("clicks").doc(username).set({ clickCount, bonusClaimed })
                 .then(() => {
                     updateLeaderboard();
                 })
@@ -128,21 +133,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to update click count with bonus
     function claimBonus() {
-        db.collection("clicks").doc(username).get().then(doc => {
-            if (doc.exists) {
-                clickCount += 100;  // Add 100 clicks as a bonus
-                countDisplay.textContent = clickCount;
-                db.collection("clicks").doc(username).set({ clickCount })
-                    .then(() => {
-                        updateLeaderboard();
-                    })
-                    .catch(error => {
-                        console.error("Помилка оновлення документа:", error);
-                    });
-            }
-        }).catch(error => {
-            console.error("Error getting document:", error);
-        });
+        if (!bonusClaimed) {
+            db.collection("clicks").doc(username).get().then(doc => {
+                if (doc.exists) {
+                    clickCount += 10000;  // Add 10000 clicks as a bonus
+                    bonusClaimed = true;
+                    countDisplay.textContent = clickCount;
+                    bonusButton.disabled = true;
+                    db.collection("clicks").doc(username).set({ clickCount, bonusClaimed })
+                        .then(() => {
+                            updateLeaderboard();
+                        })
+                        .catch(error => {
+                            console.error("Помилка оновлення документа:", error);
+                        });
+                }
+            }).catch(error => {
+                console.error("Error getting document:", error);
+            });
+        }
     }
 
     subscribeButton.addEventListener('click', subscribeToChannel);
