@@ -135,18 +135,9 @@ document.addEventListener('DOMContentLoaded', function() {
             querySnapshot.forEach(doc => {
                 index++;
                 const listItem = document.createElement('li');
-                const medalColor = index === 1 ? 'gold' : index === 2 ? 'silver' : index === 3 ? 'bronze' : 'black';
-                listItem.innerHTML = `<span style="color:${medalColor};">${index}</span>. ${doc.id}: <span style="color:${medalColor};">${doc.data().clickCount}</span>`;
+                listItem.textContent = `${index}. ${doc.id}: ${doc.data().clickCount}`;
                 leaderboardList.appendChild(listItem);
             });
-            
-            if (clickCount > 0 && !leaderboardList.innerHTML.includes(username)) {
-                const userDoc = querySnapshot.docs.find(doc => doc.id === username);
-                const userRank = userDoc ? userDoc.data().rank : 'N/A';
-                const userListItem = document.createElement('li');
-                userListItem.innerHTML = `<span>${userRank}</span>. ${username}: <span>${clickCount}</span>`;
-                leaderboardList.appendChild(userListItem);
-            }
         }).catch(error => {
             console.error("Помилка отримання документів: ", error);
         });
