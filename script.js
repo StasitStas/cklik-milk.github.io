@@ -17,8 +17,26 @@ document.addEventListener('DOMContentLoaded', function() {
     let enableVibration = true;
     let bonusClaimed = false;
 
-    settingsIcon.addEventListener('click', function() {
-        settingsWindow.style.display = settingsWindow.style.display === 'none' ? 'block' : 'none';
+    // Зміна для збереження стану вікна налаштувань
+    let settingsWindowOpen = false;
+
+    settingsIcon.addEventListener('click', function(event) {
+        event.stopPropagation();
+        settingsWindow.style.display = settingsWindowOpen ? 'none' : 'block';
+        settingsWindowOpen = !settingsWindowOpen;
+    });
+
+    // Обробник події для закриття вікна налаштувань при кліку в будь-якій області документа
+    document.addEventListener('click', function() {
+        if (settingsWindowOpen) {
+            settingsWindow.style.display = 'none';
+            settingsWindowOpen = false;
+        }
+    });
+
+    // Обробник події для зупинки подальшого розповсюдження події та закриття вікна налаштувань при натисканні на саме вікно
+    settingsWindow.addEventListener('click', function(event) {
+        event.stopPropagation();
     });
 
     animationToggle.addEventListener('change', function() {
