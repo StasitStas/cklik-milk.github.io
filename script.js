@@ -6,22 +6,22 @@ document.addEventListener('DOMContentLoaded', function() {
     const clickEffectContainer = document.getElementById('clickEffectContainer');
     const settingsIcon = document.querySelector('.cog-icon');
     const settingsWindow = document.getElementById('settingsWindow');
-    const telegramIcon = document.querySelector('.telegram-icon'); // Додаємо телеграм іконку
-    const telegramWindow = document.getElementById('telegramWindow'); // Додаємо телеграм вікно
+    const telegramIcon = document.querySelector('.telegram-icon');
+    const telegramWindow = document.getElementById('telegramWindow');
     const animationToggle = document.getElementById('animationToggle');
     const vibrationToggle = document.getElementById('vibrationToggle');
     const subscribeButton = document.getElementById('subscribeButton');
     const bonusButton = document.getElementById('bonusButton');
 
     let username = '';
+    let firstName = '';
     let clickCount = 0;
     let enableAnimation = true;
     let enableVibration = true;
     let bonusClaimed = false;
 
-    // Зміна для збереження стану вікна налаштувань
     let settingsWindowOpen = false;
-    let telegramWindowOpen = false; // Змінна для стану вікна телеграм
+    let telegramWindowOpen = false;
 
     settingsIcon.addEventListener('click', function(event) {
         event.stopPropagation();
@@ -29,14 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
         settingsWindowOpen = !settingsWindowOpen;
     });
 
-    // Обробник події для відкриття/закриття вікна телеграм
     telegramIcon.addEventListener('click', function(event) {
         event.stopPropagation();
         telegramWindow.style.display = telegramWindowOpen ? 'none' : 'block';
         telegramWindowOpen = !telegramWindowOpen;
     });
 
-    // Обробник події для закриття вікон при кліку в будь-якій області документа
     document.addEventListener('click', function() {
         if (settingsWindowOpen) {
             settingsWindow.style.display = 'none';
@@ -48,12 +46,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Обробник події для зупинки подальшого розповсюдження події при натисканні на саме вікно налаштувань
     settingsWindow.addEventListener('click', function(event) {
         event.stopPropagation();
     });
 
-    // Обробник події для зупинки подальшого розповсюдження події при натисканні на саме вікно телеграм
     telegramWindow.addEventListener('click', function(event) {
         event.stopPropagation();
     });
@@ -71,24 +67,40 @@ document.addEventListener('DOMContentLoaded', function() {
         return urlParams.get('username');
     }
 
+    function getUserFirstName(username) {
+        return db.collection("users").doc(username).get().then(doc => {
+            if (doc.exists) {
+                return doc.data().first_name;
+            } else {
+                throw new Error('Документ не знайдено');
+            }
+        });
+    }
+
     function initialize() {
         username = getUsernameFromUrl();
         if (username) {
-            usernameDisplay.textContent = username;
-            db.collection("clicks").doc(username).get().then(doc => {
-                if (doc.exists) {
-                    clickCount = doc.data().clickCount || 0;
-                    bonusClaimed = doc.data().bonusClaimed || false;
-                    countDisplay.textContent = clickCount;
-                    if (bonusClaimed) {
-                        bonusButton.disabled = true;
+            getUserFirstName(username).then(firstNameFromDb => {
+                firstName = firstNameFromDb;
+                usernameDisplay.textContent = firstName;
+                db.collection("clicks").doc(username).get().then(doc => {
+                    if (doc.exists) {
+                        clickCount = doc.data().clickCount || 0;
+                        bonusClaimed = doc.data().bonusClaimed || false;
+                        countDisplay.textContent = clickCount;
+                        if (bonusClaimed) {
+                            bonusButton.disabled = true;
+                        }
+                    } else {
+                        db.collection("clicks").doc(username).set({ clickCount: 0, bonusClaimed: false });
                     }
-                } else {
-                    db.collection("clicks").doc(username).set({ clickCount: 0, bonusClaimed: false });
-                }
-                updateLeaderboard();
+                    updateLeaderboard();
+                }).catch(error => {
+                    console.error("Error getting document:", error);
+                });
             }).catch(error => {
-                console.error("Error getting document:", error);
+                console.error("Error getting first name:", error);
+                alert('Помилка: Не вдалося отримати ім\'я користувача.');
             });
         } else {
             alert('Помилка: Ім\'я користувача не вказане.');
@@ -183,18 +195,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Function to open Telegram bot subscription
     function subscribeToChannel() {
-        const telegramLink = "https://t.me/mqilky";  // Replace with your Telegram channel link
+        const telegramLink = "https://t.me/mqilky";
         window.open(telegramLink, "_blank");
     }
 
-    // Function to update click count with bonus
     function claimBonus() {
         if (!bonusClaimed) {
             db.collection("clicks").doc(username).get().then(doc => {
                 if (doc.exists) {
-                    clickCount += 10000;  // Add 10000 clicks as a bonus
+                    clickCount += 10000;
                     bonusClaimed = true;
                     countDisplay.textContent = clickCount;
                     bonusButton.disabled = true;
