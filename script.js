@@ -8,6 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const settingsWindow = document.getElementById('settingsWindow');
     const telegramIcon = document.querySelector('.telegram-icon'); // Додаємо телеграм іконку
     const telegramWindow = document.getElementById('telegramWindow'); // Додаємо телеграм вікно
+    const telegramIcon = document.querySelector('.globe-icon'); 
+    const telegramWindow = document.getElementById('globeWindow'); // Додаємо телеграм вікно
     const animationToggle = document.getElementById('animationToggle');
     const vibrationToggle = document.getElementById('vibrationToggle');
     const subscribeButton = document.getElementById('subscribeButton');
