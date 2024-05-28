@@ -14,7 +14,6 @@
             <span id="usernameDisplay" class="golden-text"></span>
             <i class="las la-cog cog-icon" id="settingsIcon"></i>
             <i class="lab la-telegram telegram-icon" id="telegramIcon"></i>
-            <i class="las la-certificate certificate-icon" id="certificateIcon"></i>
         </div>
         <div class="settings-window" id="settingsWindow">
             <label>
@@ -29,13 +28,7 @@
         <div class="telegram-window" id="telegramWindow">
             <button id="subscribeButton">Підписатися на канал</button>
             <button id="bonusButton">Забрати бонус</button>
-        </div>
-        <div class="certificate-window" id="certificateWindow">
-            <div id="leaderboard">
-                <h2>ТОП-5</h2>
-                <ul id="leaderboardList"></ul>
-            </div>
-        </div> <!-- Нове вікно для сертифікатів -->
+        </div> <!-- Нове вікно для телеграм -->
         <div class="coin-container">
             <img src="coin.png" alt="Coin" class="coin-image">
             <span id="count" class="click-count">0</span>
@@ -47,6 +40,10 @@
         <button id="clickButton" class="circle-button">
             <img src="img_milky.png" alt="Клікніть мене!">
         </button>
+        <div id="leaderboard">
+            <h2>ТОП-5</h2>
+            <ul id="leaderboardList"></ul>
+        </div>
         <div id="clickEffectContainer"></div> <!-- Контейнер для анімації натискань -->
     </div>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
