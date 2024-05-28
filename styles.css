@@ -133,7 +133,6 @@ body {
 }
 
 #leaderboard {
-    margin-top: 20px;
     text-align: left;
     border: 2px solid #000;
     border-radius: 10px;
@@ -270,6 +269,36 @@ body {
     background-color: #006699; /* Колір при наведенні */
 }
 
+.certificate-window {
+    display: none;
+    position: absolute;
+    top: 150px; /* Розташування під вікном налаштувань */
+    right: 10px;
+    width: 300px; /* Задаємо ширину */
+    background-color: #333;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+    z-index: 1000;
+}
+
+.certificate-window button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #0088cc; /* Колір для кнопок */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.certificate-window button:hover {
+    background-color: #006699; /* Колір при наведенні */
+}
 
 #subscribeButton, #bonusButton {
     margin-top: 10px;
