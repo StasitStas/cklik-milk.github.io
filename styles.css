@@ -114,7 +114,7 @@ body {
 
 .la-telegram {
     position: fixed;
-    top: 50px;
+    top: 60px;
     right: 10px;
     font-size: 38px;
     color: white;
@@ -124,7 +124,7 @@ body {
 
 .globe-icon {
     position: fixed;
-    top: 90px;
+    top: 110px;
     right: 10px;
     font-size: 38px;
     color: white;
