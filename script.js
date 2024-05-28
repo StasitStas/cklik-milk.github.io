@@ -8,8 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const settingsWindow = document.getElementById('settingsWindow');
     const telegramIcon = document.querySelector('.telegram-icon'); // Додаємо телеграм іконку
     const telegramWindow = document.getElementById('telegramWindow'); // Додаємо телеграм вікно
-    const telegramIcon = document.querySelector('.globe-icon'); 
-    const telegramWindow = document.getElementById('globeWindow'); // Додаємо телеграм вікно
     const animationToggle = document.getElementById('animationToggle');
     const vibrationToggle = document.getElementById('vibrationToggle');
     const subscribeButton = document.getElementById('subscribeButton');
@@ -24,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Зміна для збереження стану вікна налаштувань
     let settingsWindowOpen = false;
     let telegramWindowOpen = false; // Змінна для стану вікна телеграм
-    let globeWindowOpen = false;
 
     settingsIcon.addEventListener('click', function(event) {
         event.stopPropagation();
@@ -39,12 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
         telegramWindowOpen = !telegramWindowOpen;
     });
 
-    globeIcon.addEventListener('click', function(event) {
-        event.stopPropagation();
-        globeWindow.style.display = globeWindowOpen ? 'none' : 'block';
-        globeWindowOpen = !globeWindowOpen;
-    });
-
     // Обробник події для закриття вікон при кліку в будь-якій області документа
     document.addEventListener('click', function() {
         if (settingsWindowOpen) {
@@ -55,10 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
             telegramWindow.style.display = 'none';
             telegramWindowOpen = false;
         }
-        if (globeWindowOpen) {
-            globeWindow.style.display = 'none';
-            globeWindowOpen = false;
-        }
     });
 
     // Обробник події для зупинки подальшого розповсюдження події при натисканні на саме вікно налаштувань
@@ -68,10 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Обробник події для зупинки подальшого розповсюдження події при натисканні на саме вікно телеграм
     telegramWindow.addEventListener('click', function(event) {
-        event.stopPropagation();
-    });
-    // Обробник події для зупинки подальшого розповсюдження події при натисканні на саме вікно globe
-    globeWindow.addEventListener('click', function(event) {
         event.stopPropagation();
     });
 
