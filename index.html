@@ -25,7 +25,10 @@
                 Вібрація
             </label>
         </div>
-        <div class="telegram-window" id="telegramWindow"></div> <!-- Нове вікно для телеграм -->
+        <div class="telegram-window" id="telegramWindow">
+            <button id="subscribeButton">Підписатися на канал</button>
+            <button id="bonusButton">Забрати бонус</button>
+        </div> <!-- Нове вікно для телеграм -->
         <div class="coin-container">
             <img src="coin.png" alt="Coin" class="coin-image">
             <span id="count" class="click-count">0</span>
@@ -42,8 +45,6 @@
             <ul id="leaderboardList"></ul>
         </div>
         <div id="clickEffectContainer"></div> <!-- Контейнер для анімації натискань -->
-        <button id="subscribeButton">Підписатися на канал</button>
-        <button id="bonusButton">Забрати бонус</button>
     </div>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-analytics.js"></script>
