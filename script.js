@@ -6,10 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const clickEffectContainer = document.getElementById('clickEffectContainer');
     const settingsIcon = document.querySelector('.cog-icon');
     const settingsWindow = document.getElementById('settingsWindow');
-    const telegramIcon = document.querySelector('.telegram-icon');
-    const telegramWindow = document.getElementById('telegramWindow');
-    const certificateIcon = document.querySelector('.certificate-icon');
-    const certificateWindow = document.getElementById('certificateWindow');
+    const telegramIcon = document.querySelector('.telegram-icon'); // Додаємо телеграм іконку
+    const telegramWindow = document.getElementById('telegramWindow'); // Додаємо телеграм вікно
     const animationToggle = document.getElementById('animationToggle');
     const vibrationToggle = document.getElementById('vibrationToggle');
     const subscribeButton = document.getElementById('subscribeButton');
@@ -21,9 +19,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let enableVibration = true;
     let bonusClaimed = false;
 
+    // Зміна для збереження стану вікна налаштувань
     let settingsWindowOpen = false;
-    let telegramWindowOpen = false;
-    let certificateWindowOpen = false;
+    let telegramWindowOpen = false; // Змінна для стану вікна телеграм
 
     settingsIcon.addEventListener('click', function(event) {
         event.stopPropagation();
@@ -31,18 +29,14 @@ document.addEventListener('DOMContentLoaded', function() {
         settingsWindowOpen = !settingsWindowOpen;
     });
 
+    // Обробник події для відкриття/закриття вікна телеграм
     telegramIcon.addEventListener('click', function(event) {
         event.stopPropagation();
         telegramWindow.style.display = telegramWindowOpen ? 'none' : 'block';
         telegramWindowOpen = !telegramWindowOpen;
     });
 
-    certificateIcon.addEventListener('click', function(event) {
-        event.stopPropagation();
-        certificateWindow.style.display = certificateWindowOpen ? 'none' : 'block';
-        certificateWindowOpen = !certificateWindowOpen;
-    });
-
+    // Обробник події для закриття вікон при кліку в будь-якій області документа
     document.addEventListener('click', function() {
         if (settingsWindowOpen) {
             settingsWindow.style.display = 'none';
@@ -52,10 +46,16 @@ document.addEventListener('DOMContentLoaded', function() {
             telegramWindow.style.display = 'none';
             telegramWindowOpen = false;
         }
-        if (certificateWindowOpen) {
-            certificateWindow.style.display = 'none';
-            certificateWindowOpen = false;
-        }
+    });
+
+    // Обробник події для зупинки подальшого розповсюдження події при натисканні на саме вікно налаштувань
+    settingsWindow.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+
+    // Обробник події для зупинки подальшого розповсюдження події при натисканні на саме вікно телеграм
+    telegramWindow.addEventListener('click', function(event) {
+        event.stopPropagation();
     });
 
     animationToggle.addEventListener('change', function() {
@@ -66,29 +66,42 @@ document.addEventListener('DOMContentLoaded', function() {
         enableVibration = vibrationToggle.checked;
     });
 
+    function getUsernameFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('username');
+    }
+
     function initialize() {
-        const storedUsername = localStorage.getItem('username');
-        if (storedUsername) {
-            username = storedUsername;
+        username = getUsernameFromUrl();
+        if (username) {
             usernameDisplay.textContent = username;
             db.collection("clicks").doc(username).get().then(doc => {
                 if (doc.exists) {
-                    clickCount = doc.data().clickCount;
-                    bonusClaimed = doc.data().bonusClaimed;
+                    clickCount = doc.data().clickCount || 0;
+                    bonusClaimed = doc.data().bonusClaimed || false;
                     countDisplay.textContent = clickCount;
+                    if (bonusClaimed) {
+                        bonusButton.disabled = true;
+                    }
+                } else {
+                    db.collection("clicks").doc(username).set({ clickCount: 0, bonusClaimed: false });
                 }
+                updateLeaderboard();
             }).catch(error => {
-                console.error("Помилка отримання документа:", error);
+                console.error("Error getting document:", error);
             });
         } else {
-            // Код для обробки введення імені
+            alert('Помилка: Ім\'я користувача не вказане.');
         }
-        updateLeaderboard();
     }
 
     function vibrate() {
-        if (enableVibration && navigator.vibrate) {
-            navigator.vibrate(100);
+        if (enableVibration) {
+            try {
+                window.navigator.vibrate(50);
+            } catch (error) {
+                console.error("Помилка вібрації:", error);
+            }
         }
     }
 
