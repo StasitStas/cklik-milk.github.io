@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const clickEffectContainer = document.getElementById('clickEffectContainer');
     const settingsIcon = document.querySelector('.cog-icon');
     const settingsWindow = document.getElementById('settingsWindow');
+    const telegramIcon = document.querySelector('.telegram-icon'); // Додаємо телеграм іконку
+    const telegramWindow = document.getElementById('telegramWindow'); // Додаємо телеграм вікно
     const animationToggle = document.getElementById('animationToggle');
     const vibrationToggle = document.getElementById('vibrationToggle');
     const subscribeButton = document.getElementById('subscribeButton');
@@ -19,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Зміна для збереження стану вікна налаштувань
     let settingsWindowOpen = false;
+    let telegramWindowOpen = false; // Змінна для стану вікна телеграм
 
     settingsIcon.addEventListener('click', function(event) {
         event.stopPropagation();
@@ -26,16 +29,32 @@ document.addEventListener('DOMContentLoaded', function() {
         settingsWindowOpen = !settingsWindowOpen;
     });
 
-    // Обробник події для закриття вікна налаштувань при кліку в будь-якій області документа
+    // Обробник події для відкриття/закриття вікна телеграм
+    telegramIcon.addEventListener('click', function(event) {
+        event.stopPropagation();
+        telegramWindow.style.display = telegramWindowOpen ? 'none' : 'block';
+        telegramWindowOpen = !telegramWindowOpen;
+    });
+
+    // Обробник події для закриття вікон при кліку в будь-якій області документа
     document.addEventListener('click', function() {
         if (settingsWindowOpen) {
             settingsWindow.style.display = 'none';
             settingsWindowOpen = false;
         }
+        if (telegramWindowOpen) {
+            telegramWindow.style.display = 'none';
+            telegramWindowOpen = false;
+        }
     });
 
-    // Обробник події для зупинки подальшого розповсюдження події та закриття вікна налаштувань при натисканні на саме вікно
+    // Обробник події для зупинки подальшого розповсюдження події при натисканні на саме вікно налаштувань
     settingsWindow.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+
+    // Обробник події для зупинки подальшого розповсюдження події при натисканні на саме вікно телеграм
+    telegramWindow.addEventListener('click', function(event) {
         event.stopPropagation();
     });
 
