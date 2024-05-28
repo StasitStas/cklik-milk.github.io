@@ -107,8 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function createClickEffect(x, y) {
         if (enableAnimation) {
-            const clickEffect = document.createElement('span');
-            clickEffect.textContent = '+1';
+            const clickEffect = document.createElement('div');
             clickEffect.className = 'click-effect';
             clickEffect.style.left = `${x}px`;
             clickEffect.style.top = `${y}px`;
@@ -120,11 +119,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    button.addEventListener('touchstart', function(event) {
-        event.preventDefault();
+    button.addEventListener('click', function(event) {
         if (username) {
-            const touchPoints = Math.min(event.touches.length, 4);
-            clickCount += touchPoints;
+            clickCount++;
             countDisplay.textContent = clickCount;
             db.collection("clicks").doc(username).set({ clickCount, bonusClaimed })
                 .then(() => {
@@ -133,10 +130,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 .catch(error => {
                     console.error("Помилка оновлення документа:", error);
                 });
+
             vibrate();
 
             const rect = button.getBoundingClientRect();
-            for (let i = 0; i < touchPoints; i++) {
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            createClickEffect(x, y);
+        } else {
+            alert('Помилка: Ім\'я користувача не вказане.');
+        }
+    });
+
+    button.addEventListener('touchstart', function(event) {
+        if (username) {
+            clickCount++;
+            countDisplay.textContent = clickCount;
+            db.collection("clicks").doc(username).set({ clickCount, bonusClaimed })
+                .then(() => {
+                    updateLeaderboard();
+                })
+                .catch(error => {
+                    console.error("Помилка оновлення документа:", error);
+                });
+
+            vibrate();
+
+            const rect = button.getBoundingClientRect();
+            for (let i = 0; i < event.touches.length; i++) {
                 const touch = event.touches[i];
                 const x = touch.clientX - rect.left;
                 const y = touch.clientY - rect.top;
